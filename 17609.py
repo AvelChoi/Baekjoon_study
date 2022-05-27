@@ -2,10 +2,6 @@
 
 from sys import stdin
 
-input = stdin.readline
-
-n = int(input())
-
 
 def ispalindrome(text, left, right):
     rev_text = text[::-1]
@@ -13,15 +9,16 @@ def ispalindrome(text, left, right):
         return 0
     else:
         while left < right:
+            # 만약 양쪽이 같지 않다면 left와 right를 이동한 상태에서 점검
             if text[left] != text[right]:
-                check_left = ispseudo(text, left + 1, right)
-                check_right = ispseudo(text, left, right - 1)
+                left_pal = ispseudo(text, left + 1, right)
+                right_pal = ispseudo(text, left, right - 1)
 
-                if check_left or check_right:
+                if left_pal or right_pal:
                     return 1
                 else:
                     return 2
-
+            # 양쪽이 같을 경우 다음 알파벳으로 이동
             else:
                 left += 1
                 right -= 1
@@ -37,10 +34,9 @@ def ispseudo(text, left, right):
     return True
 
 
+n = int(stdin.readline().strip())
+
 for _ in range(n):
     text = input().strip()
     left, right = 0, len(text) - 1
-
-    answer = ispalindrome(text, left, right)
-
-    print(answer)
+    print(ispalindrome(text, left, right))
